@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Registration Form</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background: radial-gradient(circle at top,#1a1a1a,#000000);
+color:white;
+}
+
+.container{
+background:#111;
+padding:30px;
+border-radius:12px;
+width:320px;
+box-shadow:0 0 20px rgba(0,255,255,0.4);
+text-align:center;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:none;
+border-radius:6px;
+background:#222;
+color:white;
+}
+
+button{
+width:100%;
+padding:10px;
+margin-top:10px;
+background:#00c3ff;
+border:none;
+border-radius:6px;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#0099cc;
+}
+
+.toggle{
+font-size:12px;
+cursor:pointer;
+color:#00c3ff;
+display:block;
+text-align:right;
+}
+
+.msg{
+font-size:12px;
+text-align:left;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Register</h2>
+
+<input id="name" placeholder="Name">
+<div id="nameMsg" class="msg"></div>
+
+<input id="email" placeholder="Email">
+<div id="emailMsg" class="msg"></div>
+
+<input id="phone" placeholder="Phone">
+<div id="phoneMsg" class="msg"></div>
+
+<input type="password" id="password" placeholder="Password">
+<span class="toggle" onclick="togglePassword()">Show / Hide</span>
+
+<button onclick="register()">Register</button>
+
+</div>
+
+<script>
+
+/* Show / Hide Password */
+
+function togglePassword(){
+let pass=document.getElementById("password")
+pass.type=pass.type==="password"?"text":"password"
+}
+
+/* Real-time Validation */
+
+name.oninput=()=>{
+nameMsg.textContent=name.value.length>=3?"Valid name":"Name must be 3+ characters"
+}
+
+email.oninput=()=>{
+let valid=/^\S+@\S+\.\S+$/.test(email.value)
+emailMsg.textContent=valid?"Valid email":"Invalid email"
+}
+
+phone.oninput=()=>{
+let valid=/^[0-9]{10}$/.test(phone.value)
+phoneMsg.textContent=valid?"Valid phone":"Enter 10 digits"
+}
+
+/* Register Button */
+
+function register(){
+
+if(name.value=="" || email.value=="" || phone.value=="" || password.value==""){
+alert("Please fill all fields")
+return
+}
+
+let submissions=JSON.parse(localStorage.getItem("submissions"))||[]
+
+submissions.push({
+name:name.value,
+email:email.value,
+phone:phone.value
+})
+
+localStorage.setItem("submissions",JSON.stringify(submissions))
+
+alert("Registration Successful")
+
+name.value=""
+email.value=""
+phone.value=""
+password.value=""
+
+}
+
+</script>
+
+</body>
+</html>
